@@ -12,8 +12,9 @@ export class TodoService {
   constructor(private httpClient: HttpClient) {
   }
 
+  // getTodos filters on the server by parameters owner and category.
   getTodos(filters?: { owner?: string, status?: boolean, body?: string, category?: string }): Observable<Todo[]> {
-    let httpParams: HttpParams = new HttpParams();
+    const httpParams: HttpParams = new HttpParams();
     if (filters) {
       if (filters.owner) {
         httpParams.set('owner', filters.owner);
@@ -21,18 +22,13 @@ export class TodoService {
       if (filters.status) {
         httpParams.set('status', filters.status.toString());
       }
-      if (filters.body) {
-        httpParams.set('body', filters.body);
-      }
-      if (filters.category) {
-        httpParams.set('category', filters.category);
-      }
     }
     return this.httpClient.get<Todo[]>(this.todoUrl, {
       params: httpParams
     });
   }
 
+  // Get todo by object database id.
   getTodoById(id: string): Observable<Todo> {
     return this.httpClient.get<Todo>(this.todoUrl + '/' + id);
   }
@@ -41,7 +37,7 @@ export class TodoService {
 
     let filteredTodos = todos;
 
-    // Filter by body
+    // Filter by body.
     if (filters.body) {
       filters.body = filters.body.toLowerCase();
 
@@ -49,7 +45,7 @@ export class TodoService {
         return todo.body.toLowerCase().indexOf(filters.body) !== -1;
       });
     }
-
+    // Filter by category.
     if (filters.category) {
       filters.category = filters.category.toLowerCase();
 
@@ -61,7 +57,12 @@ export class TodoService {
     return filteredTodos;
   }
 
+  // Create a new todo object.
   addTodo(newTodo: Todo): Observable<string> {
+    // Send a post request to the server to add a new todo with the object data supplied as the body.
     return this.httpClient.post<{id: string}>(this.todoUrl + '/new', newTodo).pipe(map(res => res.id));
   }
+
+  // Delete todo by id (may not need to implement for lab).
+
 }
