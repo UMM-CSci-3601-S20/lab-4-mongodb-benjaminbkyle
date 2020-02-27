@@ -21,9 +21,9 @@ export class UserService {
       if (filters.age) {
         httpParams = httpParams.set('age', filters.age.toString());
       }
-      // if (filters.company) {
-      //   httpParams = httpParams.set('company', filters.company);
-      // }
+      if (filters.company) {
+        httpParams = httpParams.set('company', filters.company);
+      }
     }
     return this.httpClient.get<User[]>(this.userUrl, {
       params: httpParams,
