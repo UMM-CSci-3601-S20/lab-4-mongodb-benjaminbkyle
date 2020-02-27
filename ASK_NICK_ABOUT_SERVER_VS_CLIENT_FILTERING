@@ -1,0 +1,2 @@
+Which filters should be client vs server side?
+Is the database filtering being handled by the TodoController logic? Or do we need to write code to have MongoDB do this?
