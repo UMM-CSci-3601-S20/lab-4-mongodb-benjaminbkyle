@@ -15,6 +15,9 @@ describe('Todo list', () => {
     expect(page.getTodoTitle()).toEqual('Todos');
   });
 
+  // ---------- Filtering Tests ---------- //
+
+  // ---------- Filtering by Category ---------- //
   it('Should type video games in the category filter and check that it returned the correct elements', async () => {
     await page.typeInput('todo-category-input', 'video games');
 
