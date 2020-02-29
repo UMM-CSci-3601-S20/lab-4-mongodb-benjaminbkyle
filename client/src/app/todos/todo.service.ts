@@ -13,7 +13,7 @@ export class TodoService {
   }
 
   // getTodos filters on the server by parameters owner and category.
-  getTodos(filters?: { owner?: string, status?: boolean, body?: string, category?: string }): Observable<Todo[]> {
+  getTodos(filters?: { owner?: string, status?: boolean}): Observable<Todo[]> {
     const httpParams: HttpParams = new HttpParams();
     if (filters) {
       if (filters.owner) {
