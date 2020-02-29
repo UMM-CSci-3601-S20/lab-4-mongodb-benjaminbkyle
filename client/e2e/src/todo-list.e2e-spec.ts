@@ -39,6 +39,6 @@ describe('Todo list', () => {
       count++;
     });
     expect(count > 0);
-    expect(count === 300);
+    //expect(count === 300); - passes when using default "dev" database file w/300 todos. Otherwise, adding will break this test
   });
 });
