@@ -85,7 +85,7 @@ describe('Todo list', () => {
     expect(todoList.filteredTodos.filter((todo: Todo) => todo.category === 'swimming').length).toBe(0);
   });
 
-  // Break tests - sanity check (we expect these to fail) -> empty string for category actually does return no results
+  // Break tests - sanity check (we expect these to fail) -> empty string for category actually does return no results, so it passes
   // it('contains no todos with category "swimming', () => {
   //   expect(todoList.filteredTodos.filter((todo: Todo) => todo.category === 'swimming').length).toBe(5);
   // });
