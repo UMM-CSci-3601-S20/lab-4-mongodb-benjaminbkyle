@@ -88,7 +88,7 @@ public class TodoController {
       filters.add(eq("status", targetStatus));
     }
 
-    String sortBy = ctx.queryParam("sortby", "owner"); //Sort by sort query param, default is name
+    String sortBy = ctx.queryParam("sortby", "category"); //Sort by sort query param, default is category
     String sortOrder = ctx.queryParam("sortorder", "asc");
 
     ctx.json(todoCollection.find(filters.isEmpty() ? new Document() : and(filters))

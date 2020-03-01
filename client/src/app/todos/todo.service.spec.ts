@@ -51,20 +51,35 @@ describe('Todo service: ', () => {
     // After every test, assert that there are no more pending requests.
     httpTestingController.verify();
   });
-  it ('getTodos() calls api/todos', () => {
+
+  it('getTodos() calls api/todos', () => {
 
     todoService.getTodos().subscribe(
       todos => expect(todos).toBe(testTodos)
     );
-      // check that only one request will be made to the specified url
+    // check that only one request will be made to the specified url
     const req = httpTestingController.expectOne(todoService.todoUrl);
     expect(req.request.method).toEqual('GET');
     req.flush(testTodos);
   });
 
-  it('filterTodos() filters by category', () => {
-    expect(testTodos.length).toBe(3);
-    const todoCategory = 'hunting';
-    expect(todoService.filterTodos(testTodos, { category: todoCategory }).length).toBe(2);
+  it('getTodos() calls api/todos with filter parameter \'owner\'', () => {
+
+    todoService.getTodos({ owner: 'Bill' }).subscribe(
+      todos => expect(todos).toBe(testTodos)
+    );
+
+    // Specify that (exactly) one request will be made to the specified URL with the role parameter.
+    const req = httpTestingController.expectOne(
+      (request) => request.url.startsWith(todoService.todoUrl) && request.params.has('owner')
+    );
+
+    // Check that the request made to that URL was a GET request.
+    expect(req.request.method).toEqual('GET');
+
+    // Check that the role parameter was 'admin'
+    expect(req.request.params.get('owner')).toEqual('Bill');
+
+    req.flush(testTodos);
   });
 });
