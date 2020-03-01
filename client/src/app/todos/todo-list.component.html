@@ -9,29 +9,26 @@
 
         <div fxLayout="row wrap" fxLayoutGap="10px">
           <!-- Examples of filtering on the server -->
-
-          <mat-form-field class="input-field">
-            <mat-label>Owner</mat-label>
-            <input matInput id="todo-owner-input" placeholder="Filter by owner"
-            [(ngModel)]="todoOwner" (input)="getTodosFromServer()">
-            <mat-hint>Filtered on the server/database</mat-hint>
-          </mat-form-field>
-        </div>
         <!--Filtering on Server-->
         <div>
           <mat-form-field class="input-field">
             <mat-label>Owner</mat-label>
             <input matInput id="todo-owner-input" placeholder="Filter by owner" [(ngModel)]="todoOwner"
               (input)="getTodosFromServer()">
+              <mat-hint>Filtered on the database</mat-hint>
           </mat-form-field>
         </div>
 
           <mat-form-field class="input-field">
             <mat-label>Status</mat-label>
-            <input matInput id="todo-status-input" placeholder="Filter by status"
-            [(ngModel)]="todoStatus" (input)="getTodosFromServer()">
-            <mat-hint>Filtered on the server/database</mat-hint>
+            <mat-select (selectionChange)="getTodosFromServer()" [(ngModel)]="todoStatus" id="todo-status-select">
+            <mat-option>--</mat-option>
+            <mat-option value="true">Complete</mat-option>
+            <mat-option value="false">Incomplete</mat-option>
+            </mat-select>
+            <mat-hint>Filtered on the database</mat-hint>
           </mat-form-field>
+        </div>
 
         <div fxLayout="row wrap" fxLayoutGap="10px">
           <!-- Examples of filtering in Angular -->

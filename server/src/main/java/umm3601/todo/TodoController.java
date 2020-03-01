@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.sound.sampled.SourceDataLine;
+
 import com.google.common.collect.ImmutableMap;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -83,12 +85,13 @@ public class TodoController {
     if(ctx.queryParamMap().containsKey("owner")) {
       filters.add(regex("owner", ctx.queryParam("owner"), "i"));
     }
+
     if(ctx.queryParamMap().containsKey("status")) {
       boolean targetStatus = ctx.queryParam("status", Boolean.class).get();
       filters.add(eq("status", targetStatus));
     }
 
-    String sortBy = ctx.queryParam("sortby", "category"); //Sort by sort query param, default is category
+    String sortBy = ctx.queryParam("sortby", "owner"); //Sort by sort query param, default is category
     String sortOrder = ctx.queryParam("sortorder", "asc");
 
     ctx.json(todoCollection.find(filters.isEmpty() ? new Document() : and(filters))

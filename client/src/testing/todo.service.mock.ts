@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Todo } from '../app/todos/todo';
+import { Todo, StatusType } from '../app/todos/todo';
 import { TodoService } from '../app/todos/todo.service';
 
 
@@ -39,7 +39,7 @@ export class MockTodoService extends TodoService {
     super(null);
   }
 
-  getTodos(filters: { owner?: string, status?: boolean}): Observable<Todo[]> {
+  getTodos(filters: { owner?: string, status?: StatusType}): Observable<Todo[]> {
     // Just return the test todos regardless of what filters are passed in
     return of(MockTodoService.testTodos);
   }

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { Todo } from './todo';
+import { Todo, StatusType } from './todo';
 import { TodoService } from './todo.service';
 
 describe('Todo service: ', () => {
@@ -69,7 +69,7 @@ describe('Todo service: ', () => {
       todos => expect(todos).toBe(testTodos)
     );
 
-    // Specify that (exactly) one request will be made to the specified URL with the role parameter.
+    // Specify that (exactly) one request will be made to the specified URL with the owner parameter.
     const req = httpTestingController.expectOne(
       (request) => request.url.startsWith(todoService.todoUrl) && request.params.has('owner')
     );
@@ -77,8 +77,49 @@ describe('Todo service: ', () => {
     // Check that the request made to that URL was a GET request.
     expect(req.request.method).toEqual('GET');
 
-    // Check that the role parameter was 'admin'
+    // Check that the owner parameter was Bill
     expect(req.request.params.get('owner')).toEqual('Bill');
+
+    req.flush(testTodos);
+  });
+  // test currently fails when it takes false as an input... doesn't receive matching request
+  // printing out the params in todo.service shows that params are actually capturing properly
+  it('getTodos() calls api/todos with filter parameter \'status\'', () => {
+
+    todoService.getTodos({ status: 'complete' }).subscribe(
+      todos => expect(todos).toBe(testTodos)
+    );
+
+    // Specify that (exactly) one request will be made to the specified URL with the status parameter.
+    const req = httpTestingController.expectOne(
+      (request) => request.url.startsWith(todoService.todoUrl) && request.params.has('status')
+    );
+
+    // Check that the request made to that URL was a GET request.
+    expect(req.request.method).toEqual('GET');
+
+    // Check that the role parameter was 'false'
+    expect(req.request.params.get('status')).toEqual('complete');
+
+    req.flush(testTodos);
+  });
+
+  it('getTodos() calls api/todos with filter parameter \'status\'', () => {
+
+    todoService.getTodos({ status: 'incomplete' }).subscribe(
+      todos => expect(todos).toBe(testTodos)
+    );
+
+    // Specify that (exactly) one request will be made to the specified URL with the status parameter.
+    const req = httpTestingController.expectOne(
+      (request) => request.url.startsWith(todoService.todoUrl) && request.params.has('status')
+    );
+
+    // Check that the request made to that URL was a GET request.
+    expect(req.request.method).toEqual('GET');
+
+    // Check that the role parameter was 'false'
+    expect(req.request.params.get('status')).toEqual('incomplete');
 
     req.flush(testTodos);
   });
