@@ -16,6 +16,14 @@
             <mat-hint>Filtered in Angular</mat-hint>
           </mat-form-field>
 
+          <mat-form-field class="row wrap" fxLayoutgap="10px">
+            <mat-form-field class="input-field">
+              <input matInput id="todo-body-input" placeholder="Filter by body" [(ngModel)]="todoBody"
+                (input)="updateFilter()">
+              <mat-hint>Filtered in Angular</mat-hint>
+            </mat-form-field>
+          </mat-form-field>
+
 
           <div fxLayout="row">
             <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10" *ngIf="serverFilteredTodos; else todosError">
@@ -28,7 +36,9 @@
                   <a mat-list-item class="todo-list-items" *ngFor="let todo of this.filteredTodos" [routerLink]="['/todos', todo._id]"
                     class="todo-list-item">
                     <h3 matLine class="todo-list-owner"> {{todo.owner}} </h3>
+                    <p matLine class="todo-list-status"> {{todo.status}}</p>
                     <p matLine class="todo-list-category"> {{todo.category}} </p>
+                    <p matLine class="todo-list-body"> {{todo.body}} </p>
                   </a>
                 </mat-nav-list>
               </mat-card-content>
