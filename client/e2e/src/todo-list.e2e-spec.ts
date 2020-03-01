@@ -42,6 +42,15 @@ describe('Todo list', () => {
       count++;
     });
     expect(count > 0);
-    //expect(count === 300); - passes when using default "dev" database file w/300 todos. Otherwise, adding will break this test
+    // expect(count === 300); - passes when using default "dev" database file w/300 todos. Otherwise, adding will break this test
+  });
+  // ---------- Filtering by owner ------------ //
+  it('Should type Blanche in the category filter and check that it returned the correct elements', async () => {
+    await page.typeInput('todo-owner-input', 'Blanche');
+
+    // All of the todos returned should have the owner we are filtering by
+    page.getTodoListItems().each(e => {
+      expect(e.element(by.className('todo-list-owner')).getText()).toEqual('Blanche');
+    });
   });
 });
