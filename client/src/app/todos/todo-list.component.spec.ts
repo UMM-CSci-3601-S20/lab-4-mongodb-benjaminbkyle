@@ -65,6 +65,43 @@ describe('Todo list', () => {
     expect(todoList.filteredTodos.length).toBe(3);
   });
 
+  // ---------- Filtering Tests ---------- //
+  // ---------- Body Filtering Tests ---------- //
+  it('contains todos with substring \'go elk hunting in montana\'', () => {
+    expect(todoList.filteredTodos.some((todo: Todo) => todo.body.toLowerCase().includes('go elk hunting in montana'))).toBe(true);
+  });
+
+  it('contains todos with substring \'finish reading game of thrones\'', () => {
+    expect(todoList.filteredTodos.some((todo: Todo) => todo.body.toLowerCase().includes('game of thrones')));
+  });
+
+  it('contains todos with substring \'elephants\'', () => {
+    expect(todoList.filteredTodos.some((todo: Todo) => todo.body.toLowerCase().includes('elephants')));
+  });
+
+  it('contains one todo with substring \'go elk hunting in montana\'', () => {
+    expect(todoList.filteredTodos.filter((todo: Todo) => todo.body.toLowerCase().includes('go elk hunting in montana')).length).toBe(1);
+  });
+
+  it('contains one todo with substring \'finish reading game of thrones\'', () => {
+    expect(todoList.filteredTodos.filter(
+      (todo: Todo) => todo.body.toLowerCase().includes('finish reading game of thrones')).length).toBe(1);
+  });
+
+  it('contains one todo with substring \'elephants\'', () => {
+    expect(todoList.filteredTodos.filter((todo: Todo) => todo.body.toLowerCase().includes('elephants')).length).toBe(1);
+  });
+
+  it('contains zero todos with substring \'outer space\'', () => {
+    expect(todoList.filteredTodos.filter((todo: Todo) => todo.body.toLowerCase().includes('outer space')).length).toBe(0);
+  });
+
+  it('contains all todos with empty substring in body', () => {
+    expect(todoList.filteredTodos.filter((todo: Todo) => todo.body.toLowerCase().includes('')).length).toBe(3);
+  });
+
+
+  // ---------- Category Filtering Tests ---------- //
   it('contains todos with category reading', () => {
     expect(todoList.filteredTodos.some((todo: Todo) => todo.category === 'reading')).toBe(true);
   });
