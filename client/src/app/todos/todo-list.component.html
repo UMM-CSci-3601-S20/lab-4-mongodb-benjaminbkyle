@@ -8,8 +8,7 @@
       <mat-card-content fxLayout="column">
 
         <div fxLayout="row wrap" fxLayoutGap="10px">
-          <!-- Examples of filtering on the server -->
-          <!--Filtering on Server-->
+          <!--Filtering on Database-->
           <div>
             <mat-form-field class="input-field">
               <mat-label>Owner</mat-label>
@@ -22,7 +21,7 @@
           <mat-form-field class="input-field">
             <mat-label>Status</mat-label>
             <mat-select (selectionChange)="getTodosFromServer()" [(ngModel)]="todoStatus" id="todo-status-select">
-              <mat-option value="null">--</mat-option>
+              <mat-option value=''>--</mat-option>
               <mat-option value="true">Complete</mat-option>
               <mat-option value="false">Incomplete</mat-option>
             </mat-select>
