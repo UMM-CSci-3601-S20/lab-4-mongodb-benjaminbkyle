@@ -124,4 +124,39 @@ describe('Todo service: ', () => {
     req.flush(testTodos);
   });
 
+  // Angular Filtering Tests - doesn't call api (done by client)
+  it('getTodos() calls angular filter with parameter \'body\'', () => {
+
+    todoService.filterTodos(testTodos , {body: 'lorem'}).forEach(e => {
+      expect(e.body.toLocaleLowerCase().includes('lorem')).toBe(true);
+    });
+  });
+
+  it('getTodos() calls angular filter with parameter \'body\'', () => {
+
+    todoService.filterTodos(testTodos , {body: 'ipsum'}).forEach(e => {
+      expect(e.body.toLocaleLowerCase().includes('ipsum')).toBe(true);
+    });
+  });
+
+  it('getTodos() calls api/todos with filter parameter \'status\'', () => {
+
+    todoService.getTodos({ status: 'incomplete' }).subscribe(
+      todos => expect(todos).toBe(testTodos)
+    );
+
+    // Specify that (exactly) one request will be made to the specified URL with the status parameter.
+    const req = httpTestingController.expectOne(
+      (request) => request.url.startsWith(todoService.todoUrl) && request.params.has('status')
+    );
+
+    // Check that the request made to that URL was a GET request.
+    expect(req.request.method).toEqual('GET');
+
+    // Check that the role parameter was 'false'
+    expect(req.request.params.get('status')).toEqual('incomplete');
+
+    req.flush(testTodos);
+  });
+
 });
