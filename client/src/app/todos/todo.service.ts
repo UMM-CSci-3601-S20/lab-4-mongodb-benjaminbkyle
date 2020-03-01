@@ -17,10 +17,10 @@ export class TodoService {
     let httpParams: HttpParams = new HttpParams();
     if (filters) {
       if (filters.owner) {
-        httpParams.set('owner', filters.owner);
+        httpParams = httpParams.set('owner', filters.owner);
       }
       if (filters.status) {
-        httpParams.set('status', filters.status.toString());
+        httpParams = httpParams.set('status', filters.status.toString());
       }
     }
     return this.httpClient.get<Todo[]>(this.todoUrl, {
