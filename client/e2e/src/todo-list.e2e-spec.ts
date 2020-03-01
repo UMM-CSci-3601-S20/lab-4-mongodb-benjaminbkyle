@@ -59,26 +59,28 @@ describe('Todo list', () => {
   });
 
   // ---------- Status Filtering Tests ---------- //
-  it('Check that the status \'true\' exists and get those todos', async () => {
-    await page.typeInput('todo-status-input', 'true');
 
-    // All of the todos returned should have true as the status
-    page.getTodoListItems().each( async e => {
-      const status = await e.element(by.className('todo-list-status')).getText();
-      expect(status.toLowerCase()).toEqual('true');
+  it('Should select a status and check that it returned correct elements', async () => {
+    await page.selectMatSelectValue('todo-status-select', 'true');
+
+    expect(page.getTodoListItems().count()).toBeGreaterThan(0);
+
+    // All of the todo list items should have the status we are looking for
+    page.getTodoListItems().each(e => {
+      expect(e.element(by.className('todo-list-status')).getText()).toEqual('true');
     });
   });
 
-  it('Check that the status \'false\' exists and get those todos', async () => {
-    await page.typeInput('todo-status-input', 'false');
+  it('Should select a status and check that it returned correct elements', async () => {
+    await page.selectMatSelectValue('todo-status-select', 'false');
 
-    // All of the todos returned should have false as the status
-    page.getTodoListItems().each( async e => {
-      const status = await e.element(by.className('todo-list-status')).getText();
-      expect(status.toLowerCase()).toEqual('false');
+    expect(page.getTodoListItems().count()).toBeGreaterThan(0);
+
+    // All of the todo list items should have the status we are looking for
+    page.getTodoListItems().each(e => {
+      expect(e.element(by.className('todo-list-status')).getText()).toEqual('false');
     });
   });
-
 
 
   // ---------- Body Filtering ---------- //
