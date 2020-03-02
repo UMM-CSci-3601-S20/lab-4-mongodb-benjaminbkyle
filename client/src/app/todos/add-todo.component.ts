@@ -30,13 +30,14 @@ export class AddTodoComponent implements OnInit {
     ],
 
     status: [
-      {type: 'required', message: 'Status is required'}
+      {type: 'required', message: 'Status is required'},
     ],
 
     body: [
       {type: 'required', message: 'Body is required'},
       {type: 'minLength', message: 'Body must be at least 2 characters long'},
       {type: 'maxLength', message: 'Body cannot be more than 200 characters long'},
+      {type: 'pattern', message: 'Body must be non-empty (not consisting of white spaces)'}
     ],
 
     category: [
@@ -60,7 +61,7 @@ export class AddTodoComponent implements OnInit {
         Validators.pattern('[a-zA-Z]+'),
       ])),
 
-      // We require either "complete" or "incomplete"
+      // We require either "complete" or "incomplete", which is a drop-down value
       status: new FormControl('', Validators.compose([
         Validators.required,
       ])),
@@ -70,6 +71,9 @@ export class AddTodoComponent implements OnInit {
         Validators.required,
         Validators.minLength(2),
         Validators.maxLength(200),
+        // Source and much adulation goes to: http://www.theunixcode.com/2015/07/regular-expression-to-allow-spaces-between-words/
+        // -- modified for all characters w/out extra whitespace
+        Validators.pattern('^[^ ]+( [^ ]+)*$'),
       ])),
 
       // We require a non-empty category with a length between 2 and 50, letters only.
@@ -78,7 +82,8 @@ export class AddTodoComponent implements OnInit {
         Validators.minLength(2),
         Validators.maxLength(50),
         // Source and much adulation goes to: http://www.theunixcode.com/2015/07/regular-expression-to-allow-spaces-between-words/
-        Validators.pattern('^[a-zA-Z]+( +[a-zA-Z]+)*$'),
+        // -- modified for only letters w/out extra whitespace
+        Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$'),
       ])),
     });
 
@@ -91,7 +96,7 @@ export class AddTodoComponent implements OnInit {
 
   submitForm() {
     this.todoService.addTodo(this.addTodoForm.value).subscribe(  (newID) => {
-      this.snackBar.open('TODO ID:' + newID, null, {
+      this.snackBar.open('TODO ID:' + newID, null, {    // returns the newly-added todo ID
         duration: 3500,
       });
     }, err => {

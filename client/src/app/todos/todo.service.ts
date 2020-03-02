@@ -12,6 +12,10 @@ export class TodoService {
   constructor(private httpClient: HttpClient) {
   }
 
+  getTodoById(id: string): Observable<Todo> {
+    return this.httpClient.get<Todo>(this.todoUrl + '/' + id);
+  }
+
   // getTodos filters on the server by parameters owner and category.
   getTodos(filters?: { owner?: string, status?: StatusType}): Observable<Todo[]> {
     let httpParams: HttpParams = new HttpParams();
@@ -26,11 +30,6 @@ export class TodoService {
     return this.httpClient.get<Todo[]>(this.todoUrl, {
       params: httpParams
     });
-  }
-
-  // Get todo by object database id.
-  getTodoById(id: string): Observable<Todo> {
-    return this.httpClient.get<Todo>(this.todoUrl + '/' + id);
   }
 
   filterTodos(todos: Todo[], filters: { body?: string, category?: string }): Todo[] {

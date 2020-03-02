@@ -139,24 +139,58 @@ describe('Todo service: ', () => {
     });
   });
 
-  it('getTodos() calls api/todos with filter parameter \'status\'', () => {
+  it('getTodos() calls angular filter with parameter \'body\'', () => {
 
-    todoService.getTodos({ status: 'incomplete' }).subscribe(
-      todos => expect(todos).toBe(testTodos)
-    );
-
-    // Specify that (exactly) one request will be made to the specified URL with the status parameter.
-    const req = httpTestingController.expectOne(
-      (request) => request.url.startsWith(todoService.todoUrl) && request.params.has('status')
-    );
-
-    // Check that the request made to that URL was a GET request.
-    expect(req.request.method).toEqual('GET');
-
-    // Check that the role parameter was 'false'
-    expect(req.request.params.get('status')).toEqual('incomplete');
-
-    req.flush(testTodos);
+    todoService.filterTodos(testTodos , {body: 'lorem'}).forEach(e => {
+      expect(e.body.toLocaleLowerCase().includes('lorem')).toBe(true);
+    });
   });
 
+  it('getTodos() calls angular filter with parameter \'body\'', () => {
+
+    todoService.filterTodos(testTodos , {body: 'ipsum'}).forEach(e => {
+      expect(e.body.toLocaleLowerCase().includes('ipsum')).toBe(true);
+    });
+  });
+
+  it('getTodos() calls angular filter with parameter \'category\'', () => {
+
+    todoService.filterTodos(testTodos , {category: 'hunting'}).forEach(e => {
+      expect(e.category.toLocaleLowerCase()).toEqual('hunting');
+    });
+  });
+
+  it('getTodos() calls angular filter with parameter \'category\'', () => {
+
+    todoService.filterTodos(testTodos , {category: 'reading'}).forEach(e => {
+      expect(e.category.toLocaleLowerCase()).toEqual('reading');
+    });
+  });
+
+  it('addTodo() calls api/todos/new', () => {
+
+    todoService.addTodo(testTodos[1]).subscribe(
+      id => expect(id).toBe('testid')
+    );
+
+    const req = httpTestingController.expectOne(todoService.todoUrl + '/new');
+
+    expect(req.request.method).toEqual('POST');
+    expect(req.request.body).toEqual(testTodos[1]);
+
+    req.flush({id: 'testid'});
+  });
+
+  it('getTodoById() calls api/todos/id', () => {
+    const targetTodo: Todo = testTodos[0];
+    const targetId: string = targetTodo._id;
+    todoService.getTodoById(targetId).subscribe(
+      todo => expect(todo).toBe(targetTodo)
+    );
+
+    const expectedUrl: string = todoService.todoUrl + '/' + targetId;
+    const req = httpTestingController.expectOne(expectedUrl);
+    expect(req.request.method).toEqual('GET');
+    req.flush(targetTodo);
+  });
 });
