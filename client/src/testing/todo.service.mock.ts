@@ -44,14 +44,14 @@ export class MockTodoService extends TodoService {
     return of(MockTodoService.testTodos);
   }
 
-  getTodoById(id: string): Observable<Todo> {
-    // If the specified ID is for the first test todo,
-    // return that todo, otherwise return `null` so
-    // we can test illegal todo requests.
-    if (id === MockTodoService.testTodos[0]._id) {
-      return of(MockTodoService.testTodos[0]);
-    } else {
-      return of(null);
-    }
-  }
+  // getTodoById(id: string): Observable<Todo> {
+  //   // If the specified ID is for the first test todo,
+  //   // return that todo, otherwise return `null` so
+  //   // we can test illegal todo requests.
+  //   if (id === MockTodoService.testTodos[0]._id) {
+  //     return of(MockTodoService.testTodos[0]);
+  //   } else {
+  //     return of(null);
+  //   }
+  // }
 }

@@ -21,11 +21,11 @@ export class AddUserComponent implements OnInit {
 
   // not sure if this name is magical and making it be found or if I'm missing something,
   // but this is where the red text that shows up (when there is invalid input) comes from
-  add_user_validation_messages = {
+  addUserValidationMessages = {
     name: [
       {type: 'required', message: 'Name is required'},
-      {type: 'minlength', message: 'Name must be at least 2 characters long'},
-      {type: 'maxlength', message: 'Name cannot be more than 50 characters long'},
+      {type: 'minLength', message: 'Name must be at least 2 characters long'},
+      {type: 'maxLength', message: 'Name cannot be more than 50 characters long'},
       {type: 'pattern', message: 'Name must contain only numbers and letters'},
       {type: 'existingName', message: 'Name has already been taken'}
     ],
