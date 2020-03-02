@@ -11,6 +11,17 @@
     return text;
   }
 
+  public static randomAlpha(length: number): string {
+    let text = '';
+    const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+
+    for (let i = 0; i < length; i++) {
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+
+    return text;
+  }
+
   public static randomBoolean(): boolean {
     return Boolean(Math.round(Math.random()));
   }

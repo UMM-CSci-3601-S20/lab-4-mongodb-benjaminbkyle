@@ -12,7 +12,8 @@ exports.config = {
   specs: [
     './src/**/*.e2e-spec.ts',
     //'./src/**/todo-list.e2e-spec.ts',
-    //'./src/**/add-todo.e2e-spec.ts'
+    //'./src/**/add-todo.e2e-spec.ts',
+    //'./src/**/add-user.e2e-spec.ts'
   ],
   capabilities: {
     browserName: 'chrome'

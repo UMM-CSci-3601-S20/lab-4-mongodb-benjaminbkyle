@@ -2,12 +2,12 @@ import { browser, by, element, Key, ElementFinder } from 'protractor';
 
 export interface TestTodo {
   owner: string;
-  status: boolean;
+  status: string;
   body: string;
   category: string;
 }
 
-export class TodoPage{
+export class AddTodoPage{
   navigateTo() {
     return browser.get('/todos/new');
   }
@@ -35,7 +35,7 @@ export class TodoPage{
   }
 
   clickAddTodo() {
-    return element(by.buttonText('ADD USER')).click();
+    return element(by.buttonText('ADD TODO')).click();
   }
 
   async addTodo(newTodo: TestTodo) {
